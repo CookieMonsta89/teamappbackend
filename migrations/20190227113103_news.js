@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
     tbl
         .string('content')
     tbl
-        .timestamp('created_at')
+        .timestamps(true, true)
     
   })
 };

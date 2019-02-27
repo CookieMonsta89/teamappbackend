@@ -67,7 +67,7 @@ server
     .post('/players', (req, res) => {
         const { name, position, grade, jersey } = req.body;
         if (!name || !position || !grade || !jersey) {
-            res.status(400).json({ errorMessage: "Please provide a name, position, grade and jersey number"})
+            return res.status(400).json({ errorMessage: "Please provide a name, position, grade and jersey number"})
         }
         db
             .insert({ name, position, grade, jersey })
@@ -86,7 +86,7 @@ server
     .post('/coaches', (req, res) => {
         const { name, position, education, years } = req.body;
         if (!name || !position || !education || !years) {
-            res.status(400).json({ errorMessage: "Please provide a name, position, education and years" })
+            return res.status(400).json({ errorMessage: "Please provide a name, position, education and years" })
         }
         db
             .insert({ name, position, education, years })
@@ -98,6 +98,46 @@ server
                 res.status(400).json({ error: "Error Saving Coach" })
             })
     })
+
+//POST News
+
+server
+    .post('/news', (req, res) => {
+        const { name, content } = req.body;
+        if (!name || !content) {
+            return res.status(400).json({ errorMessage: "Please provide BOTH name and content"})
+        }
+        db 
+            .insert(req.body)
+            .into('news')
+            .then(news => {
+                res.status(201).json(req.body)
+            })
+            .catch(err => {
+                res.status(400).json({ error: "Error Saving News"})
+            })
+    })
+
+//POST Games
+
+server 
+    .post('/games', (req, res) => {
+        const { teamname, date, location, time, outcome, score } = req.body;
+        if (!teamname || !date || !location || !time || !outcome || !score) {
+            return res.status(400).json({ errorMessage: "Please provide ALL data"})
+        }
+        db 
+            .insert({teamname, date, location, time, outcome, score})
+            .into('games')
+            .then(game => {
+                res.status(201).json(req.body)
+            })
+            .catch(err => {
+                res.status(400).json({ error: "Error saving game"})
+            })
+    })
+
+
 
 const port = 3300;
 server.listen(port, function() {

@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('news').insert([
-        {id: 1, name: 'Practice Rescheduled', content:'Due to weather, practice will be in gym', created_at: Date()}
+        {id: 1, name: 'Practice Rescheduled', content:'Due to weather, practice will be in gym'}
       ]);
     });
 };
