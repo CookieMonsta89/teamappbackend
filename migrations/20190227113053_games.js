@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
         .string('teamname', 256)
         .notNullable()
     tbl 
-        .date('date')  
+        .date('date', new Date())  
     tbl
         .string('location')
     tbl
