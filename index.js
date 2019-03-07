@@ -2,11 +2,17 @@ const express = require('express');
 
 const db = require('./data/db.js');
 
+const cors = require('cors');
+
 const server = express();
+
+server.use(cors());
+
+
 
 server.use(express.json());
 
-///endpoints go here
+/////////////////////GETS
 
 //GET Players
 
@@ -59,7 +65,22 @@ server
                 res.status(500).json(err)
             })
     })
-////////////////////////////////////////////
+
+//GET Users based off of UID
+
+server
+   .get('/users', (req, res) => {
+       console.log(req.headers.authorization)
+        db('users')
+            .where('uid', '=', req.headers.authorization)
+            .then(user => {
+                res.status(200).json(user[0])                
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+    })
+////////////////////////////////////////////POSTS
 
 //POST Player
 
@@ -136,6 +157,8 @@ server
                 res.status(400).json({ error: "Error saving game"})
             })
     })
+
+
 
 
 
